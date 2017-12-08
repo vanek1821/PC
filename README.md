@@ -1,0 +1,2 @@
+# PC
+Semestrálka z céčka
