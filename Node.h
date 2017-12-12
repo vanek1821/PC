@@ -1,11 +1,11 @@
 typedef struct{
 	int name;
-	struct node *next;
+	struct Node *next;
 	int visited;
 }node;
 
-node *create_node(int name);
-void print_node(node *n);
-void add_node(node *n, int name);
-void print_node_name(node *n);
+node *createNode(int name);
+void printNode(node *n);
+void addEdge(node *n, int name);
+void printNodeName(node *n);
 node *getNode(node *nodes[], int name, int nodeCount);

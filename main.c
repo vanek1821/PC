@@ -3,29 +3,48 @@
 #include <string.h>
 #include <limits.h>
 #include "Node.h"
+#include "Path.h"
 
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a - *(int*)b );
 }
-void dfs(node *nodes[], int start, int end, int node_count ){
-
-	node * startNode = NULL;
-	startNode = getNode(nodes, start, node_count);
-	startNode->visited = 1;
-	printf("Aktuální node: ");
-	print_node_name(startNode);
-
-	while(startNode->next!=NULL){
-		startNode = startNode->next;
-		if(getNode(nodes, startNode->name, node_count)->visited==0){
-			if(startNode->name == end){
-				getNode(nodes, end, node_count)->visited=0;
-			}
-			startNode->visited=1;
-			dfs(nodes, startNode->name, end,node_count );
-		}
+void savePath(Path* paths[], Path*p){
+	int i=0;
+	for (i = 0; i < p->pathSize; i++) {
+		//if(p->nodePath[i]!=NULL){
+			paths[0]->nodePath[i]=p->nodePath[i];
+		//}
 	}
 
+}
+
+void dfs(Path *paths[], Path *p, int pathPointer,node *nodes[], int start, int end, int node_count ){
+	node * pointNode = NULL;
+	pointNode = getNode(nodes, start, node_count);
+	addToPath(p, pointNode->name);
+	//printNode(pointNode);
+
+	if(pointNode->name == end){
+		printf("---- Nalezeno ----\n");
+		printPath(p);
+		//savePath(paths, p);
+		//printPath(paths[0]);
+		pathPointer++;
+		return;
+	}
+	pointNode->visited = 1;
+	node *nextNode = NULL;
+
+	while(pointNode->next!=NULL){
+		pointNode = (node*)pointNode->next;
+		nextNode = getNode(nodes, pointNode->name, node_count);
+		if (nextNode->visited == 0){
+			nextNode->visited =1;
+			dfs(paths, p, pathPointer, nodes, nextNode->name, end, node_count);
+			removeFromPath(p);
+			nextNode->visited =0;
+		}
+	}
 }
 
 
@@ -86,7 +105,7 @@ int main(int argc, char* argv[]){
 			node * tmp;
 
 			previous = records2_tmp[i];
-			tmp = create_node(records2_tmp[i]);
+			tmp = createNode(records2_tmp[i]);
 			//tmp->name = records2_tmp[i];
 			//tmp->next = NULL;
 			//tmp->visited = 0;
@@ -100,20 +119,27 @@ int main(int argc, char* argv[]){
 	for (i = 0; i < node_count; i++) {
 		for (j = 0; j < record_count; j+=2) {
 			if(nodes[i]->name == records_tmp[j]){
-				add_node(nodes[i], records_tmp[j+1]);
+				addNode(nodes[i], records_tmp[j+1]);
 			}
 			if(nodes[i]->name == records_tmp[j+1]){
-				add_node(nodes[i], records_tmp[j]);
+				addNode(nodes[i], records_tmp[j]);
 			}
 		}
 	}
 	for (i = 0; i < node_count; i++){
-		print_node(nodes[i]);
-	}
-
+		printNode(nodes[i]);
+		}
 	printf("recordCount: %d\nnodeCount: %d\n\n\n", record_count, node_count);
+	printf("DFS\n------------------\n");
+	//getNode(nodes, 1, node_count)->visited=1;
+	Path ** paths = (Path**)malloc(sizeof(Path*)*10);
+	int pathPointer = 0;
+	Path *p = createPath(pathPointer);
 
-	dfs(nodes, 2, 4, node_count );
+	dfs(paths, p, pathPointer, nodes, 2, 5, node_count );
+
+	//printPath(paths[0]);
+
 	free(nodes);
 	free(records2_tmp);
 	free(records_tmp);

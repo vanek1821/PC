@@ -4,7 +4,7 @@
 #include "Node.h"
 
 
-node *create_node(int name){
+node *createNode(int name){
 	node *tmp = NULL;
 	tmp = malloc(sizeof(node));
 	tmp->name = name;
@@ -14,7 +14,7 @@ node *create_node(int name){
 	return(tmp);
 }
 
-void print_node(node *n){
+void printNode(node *n){
 	node * tmp = malloc(sizeof(node));
 	tmp = n;
 	if(!tmp){
@@ -23,15 +23,17 @@ void print_node(node *n){
 	}
 	else{
 		printf("%d", tmp->name);
-		tmp = tmp->next;
+		tmp = (node*)tmp->next;
 		while(tmp!=NULL){
 			printf(" -> %d", tmp->name);
-			tmp = tmp->next;
+			tmp = (node*)tmp->next;
 		}
 		printf("\n");
+		//printf(" || visited: %d\n", n->visited);
 	}
+	return;
 }
-void print_node_name(node *n){
+void printNodeName(node *n){
 	node * tmp = malloc(sizeof(node));
 	tmp = n;
 	if(!tmp){
@@ -42,15 +44,15 @@ void print_node_name(node *n){
 		printf("%d ", tmp->name);
 		printf("\n");
 	}
-	fflush(stdout);
+	return;
 }
-void add_node(node *head, int name){
+void addNode(node *head, int name){
 	node * current = head;
 	while(current->next != NULL){
-		current = current->next;
+		current = (node*)current->next;
 	}
 	current->next = malloc(sizeof(node));
-	current = current->next;
+	current = (node*)current->next;
 	current->name = name;
 	current->next = NULL;
 	current->visited = 0;
