@@ -14,15 +14,18 @@ Path *createPath(int id){
 	tmp->nodePath = (int*) malloc(sizeof(int)*tmp->pathSize);
 	return(tmp);
 }
-void printPath(Path *p){
+void printPath(Path *p, FILE* outf){
 	int i = 0;
-	printf("Path%d :", p->id);
+	//printf("Path%d :", p->id);
+	fprintf(outf, "Path%d: ", p->id);
 	for (i = 0; i < p->pathSize; i++) {
 		if(p->nodePath[i]!=NULL){
-			printf(" %d ", p->nodePath[i]);
+			printf("%d-", p->nodePath[i]);
+			fprintf(outf, " %d ", p->nodePath[i]);
 		}
 	}
-	printf("\n");
+	printf("|| delka cesty: %d \n",p->pointer);
+	fprintf(outf, "\n");
 	return;
 }
 void addToPath(Path *p, int nodeName){
