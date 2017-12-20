@@ -1,12 +1,19 @@
 typedef struct{
 	int name;
 	struct Node *next;
+	int nodePointer;
+	int index;
 	int visited;
-}node;
+	struct DateTime *date;
+	short day, month;
+	int year;
+}Node;
 
-node *createNode(int name);
-void printNode(node *n);
-void addNode(node *head, int name);
-void addEdge(node *n, int name);
-void printNodeName(node *n);
-node *getNode(node *nodes[], int name, int nodeCount);
+Node *createNode(int name);
+void printNode(Node *n, FILE* outf);
+void addNode(Node *head, Node *nodes[], int name, DateTime *date);
+int findNodePointer(Node *nodes[], int nodeName);
+void addEdge(Node *n, int name);
+void printNodeName(Node *n);
+Node *findNode(Node *nodes[], int nodeName, int node_count);
+Node *getNode(Node *nodes[], int nodePointer);
