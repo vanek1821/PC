@@ -49,7 +49,7 @@ void addToPath(Path *p, Node *node){
 		for (i = 0; i <= p->pointer; i++) {
 			tmp[i] = (Node*) p->nodePath[i];
 		}
-		free(p->nodePath);
+		//free(p->nodePath);
 		p->nodePath = tmp;
 	}
 	p->nodePath[p->pointer] = (Node*) node;

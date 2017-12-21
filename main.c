@@ -26,13 +26,16 @@ int cmpFuncPaths(const void *a, const void *b){
 
 void savePath(Path* paths[], Path*p){
 	int j;
-
 	Path *tmp = createPath(pathCount);
+	printf("Ukladam\n");
 		for (j = 0; j < p->pointer; j++) {
 			addToPath(tmp,(Node*) p->nodePath[j]);
-		}
+			printf("node -");
+			}
+	printPath(tmp);
 	paths[pathCount] = tmp;
 	pathCount++;
+	printf("\n");
 }
 
 void dfs(Path *paths[], Path *p, Node *nodes[], Node *startNode, int end, int nodeCount, int maxLength){
@@ -143,11 +146,9 @@ int main(int argc, char* argv[]){
 	for (i = 0; i < nodeCount; i++) {
 		for (j = 0; j < record_count; j+=2) {
 			if(nodes[i]->name == records_tmp[j]){
-				free(nodes[i]->date);
 				addNode(nodes[i], nodes, records_tmp[j+1], createDateTime(years[j/2], months[j/2], days[j/2]));
 			}
 			if(nodes[i]->name == records_tmp[j+1]){
-				free(nodes[i]->date);
 				addNode(nodes[i], nodes, records_tmp[j], createDateTime(years[j/2], months[j/2], days[j/2]));
 			}
 		}
