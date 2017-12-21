@@ -7,7 +7,7 @@ typedef struct{
 }Path;
 
 Path *createPath(int id);
-void printPath(Path *p, FILE *outf);
+void printPath(Path *p);
 void addToPath(Path *p, Node *node);
 void removeFromPath(Path *p);
-int countMetric(Path *p);
+void countMetric(Path *p);
