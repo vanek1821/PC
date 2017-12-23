@@ -132,6 +132,7 @@ int main(int argc, char* argv[]){
 			Node * tmp;
 			previous = records2_tmp[i];
 			tmp = createNode(records2_tmp[i]);
+			printf("creating node: %d\n", tmp->name);
 			tmp->index = nodeCount;
 			nodes[nodeCount] = tmp;
 			nodeCount++;
@@ -142,9 +143,11 @@ int main(int argc, char* argv[]){
 	for (i = 0; i < nodeCount; i++) {
 		for (j = 0; j < record_count; j+=2) {
 			if(nodes[i]->name == records_tmp[j]){
+				printf("adding node: %d to %d\n",records_tmp[j+1], nodes[i]->name);
 				addNode(nodes[i], nodes, records_tmp[j+1], createDateTime(years[j/2], months[j/2], days[j/2]));
 			}
 			if(nodes[i]->name == records_tmp[j+1]){
+				printf("adding node: %d to %d\n",records_tmp[j], nodes[i]->name);
 				addNode(nodes[i], nodes, records_tmp[j], createDateTime(years[j/2], months[j/2], days[j/2]));
 			}
 		}

@@ -88,6 +88,7 @@ Node *findNode(Node *nodes[], int nodeName, int nodeCount){
 }
 void freeNode(Node *n){
 	if(n->next == NULL) {
+    printf("freeing node: %d\n", n->name);
     free(n->date);
     free(n);
   }
