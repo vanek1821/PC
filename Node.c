@@ -18,9 +18,8 @@ Node *createNode(int name){
 }
 
 void printNode(Node *n){
-	  Node * tmp = malloc(sizeof(Node));
-	  DateTime *tmpDate = malloc(sizeof(DateTime));
-	  tmp = n;
+	  Node * tmp = n;
+	  DateTime *tmpDate = tmp->date;
 	  if(!tmp){
 		  printf("NULL");
 		  return;
@@ -40,8 +39,7 @@ void printNode(Node *n){
 }
 
 void printNodeName(Node *n){
-  Node * tmp = malloc(sizeof(Node));
-  tmp = n;
+  Node * tmp = n;
   if(!tmp){
     printf("NULL");
     return;
@@ -56,8 +54,7 @@ void printNodeName(Node *n){
 int findNodePointer(Node *nodes[], int nodeName){
   int i = 0;
   while(nodes[i]->name != nodeName){
-	  //printf("nodeName: %d\n", nodes[i]->name);
-	  i++;
+    i++;
   }
   return i;
 
@@ -90,7 +87,10 @@ Node *findNode(Node *nodes[], int nodeName, int nodeCount){
   return NULL;
 }
 void freeNode(Node *n){
-	if(n->next == NULL) free(n);
+	if(n->next == NULL) {
+    free(n->date);
+    free(n);
+  }
 	else {
 		n=n->next;
 		freeNode(n);

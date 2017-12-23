@@ -43,15 +43,7 @@ void printPath(Path *p){
 }
 
 void addToPath(Path *p, Node *node){
-	int i = 0;
-	if(p->pointer>=p->pathSize){
-		Node **tmp = (Node*) malloc(sizeof(Node*)*(p->pathSize*2));
-		for (i = 0; i <= p->pointer; i++) {
-			tmp[i] = (Node*) p->nodePath[i];
-		}
-		//free(p->nodePath);
-		p->nodePath = tmp;
-	}
+
 	p->nodePath[p->pointer] = (Node*) node;
 	p->pointer++;
 	p->pathSize = p->pointer;
@@ -93,6 +85,8 @@ void countMetric(Path* p){
 			}
 		}
 	p->metric = getDifference(min, max);
+	free(min);
+	free(max);
 	return;
 }
 
