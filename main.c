@@ -185,9 +185,6 @@ int main(int argc, char* argv[]){
 	}
 	free(nodes);
 	for(i=0; i<pathCount;i++){
-		for(j=0; j<paths[i]->pointer;j++){
-			free(paths[i]->nodePath[j]);
-		}
 		free(paths[i]->nodePath);
 		free(paths[i]);
 		}

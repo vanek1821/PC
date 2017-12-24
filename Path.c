@@ -43,7 +43,6 @@ void printPath(Path *p){
 }
 
 void addToPath(Path *p, Node *node){
-
 	p->nodePath[p->pointer] = (Node*) node;
 	p->pointer++;
 	p->pathSize = p->pointer;
@@ -62,28 +61,63 @@ void countMetric(Path* p){
 	Node *tmp = NULL;
 	DateTime *tmpDate = NULL;
 
-	max = createDateTime(0,0,0);
-	min = createDateTime(10000,13,32);
+	int maxYear = 0;
+	int maxMonth = 0;
+	int maxDay = 0;
+	int minYear = 10000;
+	int minMonth = 13;
+	int minDay = 32;
+
+	//max = createDateTime(0,0,0);
+	//min = createDateTime(10000,13,32);
 	for (i = 1; i < p->pointer; i++) {
 			if(p->nodePath[i]!=NULL){
 				tmp = p->nodePath[i];
 				tmpDate = tmp->date;
-				if(tmpDate->year < min->year) min = tmpDate;
-				else if (tmpDate->year == min->year){
-					if(tmpDate->month < min->month) min = tmpDate;
-					else if(tmpDate->month == min->month){
-						if(tmpDate->day < min->day) min = tmpDate;
+				if(tmpDate->year < minYear){
+					minYear = tmpDate->year;
+					minMonth = tmpDate->month;
+					minDay = tmpDate->day;	
+				} 
+				else if (tmpDate->year == minYear){
+					if(tmpDate->month < minMonth) {
+						minYear = tmpDate->year;
+						minMonth = tmpDate->month;
+						minDay = tmpDate->day;	
+					} 
+					else if(tmpDate->month == minMonth){
+						if(tmpDate->day < minDay) {
+							minYear = tmpDate->year;
+							minMonth = tmpDate->month;
+							minDay = tmpDate->day;	
+						} 
 					}
 				}
-				if(tmpDate->year>max->year) max = tmpDate;
-					else if (tmpDate->year == max->year){
-						if(tmpDate->month > max->month) max = tmpDate;
-						else if(tmpDate->month == max->month){
-							if(tmpDate->day > max->day) max = tmpDate;
+
+
+				if(tmpDate->year>maxYear){
+					maxYear = tmpDate->year;
+					maxMonth = tmpDate->month;
+					maxDay = tmpDate->day;	
+				} 
+				else if (tmpDate->year == maxYear){
+					if(tmpDate->month > maxMonth){
+						maxYear = tmpDate->year;
+						maxMonth = tmpDate->month;
+						maxDay = tmpDate->day;	
+					} 
+					else if(tmpDate->month == maxMonth){
+						if(tmpDate->day > maxDay){
+							maxYear = tmpDate->year;
+							maxMonth = tmpDate->month;
+							maxDay = tmpDate->day;	
+							} 
 						}
 					}
 			}
-		}
+	}
+	max = createDateTime(maxYear, maxMonth, maxDay);
+	min = createDateTime(minYear, minMonth, minDay);
 	p->metric = getDifference(min, max);
 	free(min);
 	free(max);
