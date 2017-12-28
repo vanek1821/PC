@@ -4,7 +4,13 @@
 #include "Node.h"
 #include "Path.h"
 
-
+/**
+Creates new path
+params: 
+int id - id of path
+returns:
+Path *path
+*/
 Path *createPath(int id){
 	Path *tmp=NULL;
 	tmp = malloc(sizeof(Path));
@@ -15,6 +21,11 @@ Path *createPath(int id){
 	tmp->metric = 0;
 	return(tmp);
 }
+/**
+Prints path
+params:
+Path *p - path to print
+*/
 void printPath(Path *p){
 	int i = 0;
 	Node *tmp = NULL;
@@ -42,6 +53,12 @@ void printPath(Path *p){
 	return;
 }
 
+/**
+Adds node at the end of path
+params:
+Path *p - path
+Node *node - node to be added
+*/
 void addToPath(Path *p, Node *node){
 	p->nodePath = realloc(p->nodePath, sizeof(Node*) * (p->pathSize+1));
 	p->nodePath[p->pointer] = (Node*) node;
@@ -49,6 +66,11 @@ void addToPath(Path *p, Node *node){
 	p->pathSize = p->pointer;
 
 }
+/**
+Removes last node in path
+params:
+Path *p - path
+*/
 void removeFromPath(Path *p){
 	p->nodePath = realloc(p->nodePath, sizeof(Node*) * (p->pathSize-1));
 	p->pointer--;
@@ -56,6 +78,11 @@ void removeFromPath(Path *p){
 	p->nodePath[p->pointer] = NULL;
 	return;
 }
+/**
+Counts metric of path
+params: 
+Path *p - path
+*/
 void countMetric(Path* p){
 	int i;
 	DateTime *max = NULL;

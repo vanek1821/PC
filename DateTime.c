@@ -5,6 +5,13 @@
 #include "Node.h"
 #include "Path.h"
 
+/**
+Creates new dateTime
+params:
+int year - year
+int month - month
+int day - day
+*/
 DateTime *createDateTime(int year, int month, int day){
 	DateTime *tmp = NULL;
 	tmp = malloc(sizeof(DateTime));
@@ -14,20 +21,28 @@ DateTime *createDateTime(int year, int month, int day){
 	return tmp;
 }
 
+//Days in each month
 const int monthDays[13] = {0,31, 28, 31, 30, 31, 30,
                            31, 31, 30, 31, 30, 31};
 
+/**
+Prints DateTime
+params:
+DateTie *d - datetime to print
+*/
 void printDateTime(DateTime *d)
 {
     printf("%d-%d-%d; \n", d->year, d->month, d->day);
     return;
 }
 
-int leap(int year)
-{
-    return ((year % 4 == 0 && year % 100 != 0) || year % 400 ==0) ? 1 : 0;
-}
-
+/**
+Counts leap years since 0.0.0000 to date
+params:
+DateTime *d - date
+returns: 
+int - number of leap years
+*/
 int countLeapYears(DateTime *d)
 {
     int years = d->year;
@@ -36,6 +51,14 @@ int countLeapYears(DateTime *d)
     return years / 4 - years / 100 + years / 400;
 }
 
+/**
+Counts days between two dates
+params:
+DateTime *d1 - first date
+DateTime *d2 - second date
+returns:
+int - number of days
+*/
 int getDifference(DateTime *dt1, DateTime *dt2)
 {
 	int i;

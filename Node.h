@@ -5,8 +5,6 @@ typedef struct{
 	int index;
 	int visited;
 	struct DateTime *date;
-	short day, month;
-	int year;
 }Node;
 
 Node *createNode(int name);
