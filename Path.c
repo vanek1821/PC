@@ -9,7 +9,7 @@ Path *createPath(int id){
 	Path *tmp=NULL;
 	tmp = malloc(sizeof(Path));
 	tmp->id = id;
-	tmp->pathSize = 1;
+	tmp->pathSize = 0;
 	tmp->pointer = 0;
 	tmp->nodePath = (Node*) malloc(sizeof(Node*)*tmp->pathSize);
 	tmp->metric = 0;
@@ -43,15 +43,17 @@ void printPath(Path *p){
 }
 
 void addToPath(Path *p, Node *node){
+	p->nodePath = realloc(p->nodePath, sizeof(Node*) * (p->pathSize+1));
 	p->nodePath[p->pointer] = (Node*) node;
 	p->pointer++;
 	p->pathSize = p->pointer;
 
 }
 void removeFromPath(Path *p){
+	p->nodePath = realloc(p->nodePath, sizeof(Node*) * (p->pathSize-1));
 	p->pointer--;
+	p->pathSize = p->pointer;
 	p->nodePath[p->pointer] = NULL;
-
 	return;
 }
 void countMetric(Path* p){
@@ -68,8 +70,10 @@ void countMetric(Path* p){
 	int minMonth = 13;
 	int minDay = 32;
 
+
 	//max = createDateTime(0,0,0);
 	//min = createDateTime(10000,13,32);
+
 	for (i = 1; i < p->pointer; i++) {
 			if(p->nodePath[i]!=NULL){
 				tmp = p->nodePath[i];
@@ -116,8 +120,11 @@ void countMetric(Path* p){
 					}
 			}
 	}
+	printf("b\n");
 	max = createDateTime(maxYear, maxMonth, maxDay);
 	min = createDateTime(minYear, minMonth, minDay);
+	/*printf("max: %d.%d.%d\n", max->day, max->month, max->year);
+	printf("min: %d.%d.%d\n", min->day, min->month, min->year);*/
 	p->metric = getDifference(min, max);
 	free(min);
 	free(max);

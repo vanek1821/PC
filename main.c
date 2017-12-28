@@ -132,7 +132,7 @@ int main(int argc, char* argv[]){
 			Node * tmp;
 			previous = records2_tmp[i];
 			tmp = createNode(records2_tmp[i]);
-			printf("creating node: %d\n", tmp->name);
+			//printf("creating node: %d\n", tmp->name);
 			tmp->index = nodeCount;
 			nodes[nodeCount] = tmp;
 			nodeCount++;
@@ -143,11 +143,11 @@ int main(int argc, char* argv[]){
 	for (i = 0; i < nodeCount; i++) {
 		for (j = 0; j < record_count; j+=2) {
 			if(nodes[i]->name == records_tmp[j]){
-				printf("adding node: %d to %d\n",records_tmp[j+1], nodes[i]->name);
+				//printf("adding node: %d to %d\n",records_tmp[j+1], nodes[i]->name);
 				addNode(nodes[i], nodes, records_tmp[j+1], createDateTime(years[j/2], months[j/2], days[j/2]));
 			}
 			if(nodes[i]->name == records_tmp[j+1]){
-				printf("adding node: %d to %d\n",records_tmp[j], nodes[i]->name);
+				//printf("adding node: %d to %d\n",records_tmp[j], nodes[i]->name);
 				addNode(nodes[i], nodes, records_tmp[j], createDateTime(years[j/2], months[j/2], days[j/2]));
 			}
 		}
@@ -156,7 +156,6 @@ int main(int argc, char* argv[]){
 	records2_tmp = NULL;
 	free(records_tmp);
 	records_tmp = NULL;
-
 	Path ** paths = (Path**)malloc(sizeof(Path*)*10000000);
 	Path *p = createPath(0);
 
@@ -168,26 +167,26 @@ int main(int argc, char* argv[]){
 	else{
 		addToPath(p, sourceNode);
 		dfs(paths, p, nodes, sourceNode, destination, nodeCount, maxLength );
-		i=0;
+		free(p->nodePath);
+		free(p);
+		printf("a\n");
 		for(i=0; i<pathCount; i++){
+		
 			countMetric(paths[i]);
 		}
 		qsort(paths, pathCount, sizeof(Path*), cmpFuncPaths);
 		for(i=0; i<pathCount; i++){
 			printPath(paths[i]);
 		}
-
 	}
 	for(i=0; i<nodeCount;i++){
 		freeNode(nodes[i]);
-		free(nodes[i]->date);
-		free(nodes[i]);
 	}
 	free(nodes);
 	for(i=0; i<pathCount;i++){
 		free(paths[i]->nodePath);
 		free(paths[i]);
-		}
+	}
 	free(paths);
 	free(years);
 	free(months);

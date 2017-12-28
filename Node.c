@@ -61,6 +61,7 @@ int findNodePointer(Node *nodes[], int nodeName){
 }
 void addNode(Node *head, Node *nodes[], int name, DateTime *date){
   Node * current = head;
+  
   while(current->next != NULL){
     current = (Node*)current->next;
   }
@@ -73,6 +74,7 @@ void addNode(Node *head, Node *nodes[], int name, DateTime *date){
   current->visited = 0;
   return;
 }
+
 Node *getNode(Node *nodes[], int nodePointer){
   int i = 0;
   return nodes[nodePointer];
@@ -87,13 +89,13 @@ Node *findNode(Node *nodes[], int nodeName, int nodeCount){
   return NULL;
 }
 void freeNode(Node *n){
-	if(n->next == NULL) {
-    printf("freeing node: %d\n", n->name);
-    free(n->date);
-    free(n);
-  }
-	else {
-		n=n->next;
-		freeNode(n);
-	}
+   Node * tmp;
+   while (n != NULL){
+       tmp = n;
+       n = n->next;
+       free(tmp->date);
+       free(tmp);
+    }
+
 }
+

@@ -40,7 +40,6 @@ int getDifference(DateTime *dt1, DateTime *dt2)
 {
 	int i;
 	int n1, n2;
-
 	n1 = dt1->year * 365 + dt1->day;
 	n1 += countLeapYears(dt1);
 	for(i=0; i<dt1->month;i++) n1+=monthDays[i];
