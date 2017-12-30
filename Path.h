@@ -1,10 +1,12 @@
-typedef struct{
+typedef struct pat Path;
+
+struct pat{
 	int id;
 	short pathSize;
 	short pointer;
-	int *nodePath;
+	Node **nodePath;
 	int metric;
-}Path;
+};
 
 Path *createPath(int id);
 void printPath(Path *p);

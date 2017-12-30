@@ -1,8 +1,10 @@
-typedef struct{
+typedef struct dat DateTime;
+
+struct dat{
 	int year;
 	int month;
 	int day;
-}DateTime;
+};
 
 DateTime *createDateTime(int year, int month, int day);
 void printDateTime(DateTime *d);
